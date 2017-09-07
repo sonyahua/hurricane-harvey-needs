@@ -1,0 +1,69 @@
+---
+title: "Hurrican Harvey Analysis"
+author: "Sonya Hua"
+date: "September 7, 2017"
+output: rmarkdown::github_document
+---
+
+This is an automatically generated notebook for the `Hurricane Harvey Shelters in Texas and Louisiana` dataset found at:
+https://data.world/jnolasco/harvey-shelters, showcasing the use of the `data.world` R package.
+
+## Setup
+
+For first time users, before running any chunks in this notebook:
+```{r}
+devtools::install_github("datadotworld/data.world-r", build_vignettes = TRUE, force = TRUE)
+```
+```{r echo=F}
+  data.world::set_config(data.world::save_config(auth_token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50OmRhbGx5aW5nNDAyIiwiaXNzIjoiYWdlbnQ6ZGFsbHlpbmc0MDI6OmQyNmQxYjkyLTYxOTQtNDU5My05Y2EwLWU5ZGVjZGI4N2NmNyIsImlhdCI6MTUwNDgxNTcyNywicm9sZSI6WyJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX3JlYWQiXSwiZ2VuZXJhbC1wdXJwb3NlIjp0cnVlfQ.dT4LFUWBa_raFyWhlK4lp9A2SSdbw8AB2jNP0SD9pX3ETH7ikLFOkyUkTnFCnGOPX0KV8CKoEslFg0nBlLxBpQ"))
+```
+
+
+
+
+* Install the `data.world` R package:
+`install.packages("devtools")`
+  ```
+  devtools::install_github("datadotworld/data.world-r", build_vignettes = TRUE, force = TRUE)
+  ```
+* Get your API authentication token at https://data.world/settings/advanced
+* Configure the `data.world` package:
+  ```
+  data.world::set_config(data.world::save_config(auth_token = "YOUR TOKEN"))
+  ```
+
+Configuration will be saved at `~/.dw/config` and automatically applied to all future R sessions.
+
+### Try your first query
+
+List all tables in the dataset:
+```{r list tables}
+library(data.world)
+# Datasets are referenced by their URL or path
+dataset_key <- "https://data.world/jnolasco/harvey-shelters"
+# List tables available for SQL queries
+tables_qry <- data.world::qry_sql("SELECT * FROM Tables")
+tables_df <- data.world::query(tables_qry, dataset = dataset_key)
+# See what is in it
+tables_df$tableName
+```
+
+
+Try a sample query, if any tables exist:
+```{r sample query}
+if (length(tables_df$tableName) > 0) {
+  sample_qry <- data.world::qry_sql(sprintf("SELECT * FROM `%s`", tables_df$tableName[[1]]))
+  sample_df <- data.world::query(sample_qry, dataset = dataset_key)
+  sample_df
+}
+```
+
+## Next Steps
+* View our quickstart guide:
+  ```
+vignette("quickstart", package="data.world")
+  ```
+* Learn more at https://github.com/datadotworld/data.world-r
+```{r}
+#vignette("quickstart", package="data.world")
+```
